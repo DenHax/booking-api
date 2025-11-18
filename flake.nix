@@ -30,7 +30,7 @@
             pkgs.curl
             pkgs.wget
             pkgs.jq
-            pkgs.go-yq
+            pkgs.yq-go
             pkgs.go-task
 
             pkgs.ripgrep
@@ -40,7 +40,6 @@
 
             pkgs.disko
             pkgs.bun
-            pkgs.npm
 
             pkgs.nodejs_24
             pkgs.nest-cli
