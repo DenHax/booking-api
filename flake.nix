@@ -43,6 +43,7 @@
 
             pkgs.nodejs_24
             pkgs.nest-cli
+            pkgs.prisma
           ];
         };
       }
