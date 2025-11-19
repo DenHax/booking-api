@@ -12,4 +12,35 @@
 
 Решение: Не реализовывать авторизацию в данный момент
 
-##
+## Getting started
+
+Запуск происходит в Docker, оркестрация через Compose
+Конфигурирование через .env
+
+```sh
+git clone https://github.com/DenHax/booking-api.git
+cp .env.dist .env
+docker compose up --force-recreate
+
+```
+
+Образ запакованного приложения расположен в DockerHub. Образ можно собрать вручную с помощью `Make` и файла в `scripts/`
+
+```sh
+make docker
+```
+
+Будет собран образ `denhax/booking-api:v1.1`, актуальной версии тэга `git`
+
+Есть окружение для разработки в `deploy/dev`
+
+## Стэк
+
+- Nest JS - web-framework
+- Prisma - ORM
+- Postgres - Database
+- Docker, Compose - containerization and orchestration
+- Makefile - build image
+- Git - version control
+- Github, Dockerhub - code/image repository
+- Nix - developement environment
