@@ -23,3 +23,8 @@ POST /api/bookings/reserve
 - event_id (INT, ссылка на events)
 - user_id (VARCHAR)
 - created_at (TIMESTAMP)
+
+Доп: Таблица users:
+
+- id (SERIAL PRIMARY KEY)
+- username (VARCHAR)
