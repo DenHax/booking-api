@@ -1,5 +1,7 @@
 FROM node:24-alpine AS development
 WORKDIR /usr/src/app
+ARG DATABASE_URL
+ENV DATABASE_URL=$DATABASE_URL
 COPY package*.json ./
 RUN npm ci
 COPY . .
@@ -13,6 +15,9 @@ WORKDIR /usr/src/app
 COPY package*.json ./
 COPY --from=development /usr/src/app/node_modules ./node_modules
 COPY . .
+
+ARG DATABASE_URL
+ENV DATABASE_URL=$DATABASE_URL
 COPY prisma ./prisma
 RUN npx prisma generate
 RUN npm run build
