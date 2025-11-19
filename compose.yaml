@@ -21,35 +21,12 @@ services:
       booking-postgres-net:
     env_file:
       - ./.env
-
-  # migrate:
-  #   image: 'migrate/migrate'
-  #   container_name: 'review-migrate'
-  #   restart: 'on-failure:3'
-  #   depends_on:
-  #     postgres:
-  #       condition: service_healthy
-  #   environment:
-  #     POSTGRES_URL: 'postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}?sslmode=disable'
-  #   command:
-  #     - '-path=/migrations'
-  #     - '-database=postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}?sslmode=disable'
-  #     - 'up'
-  #   volumes:
-  #     - '${MIGRATIONS_DIR}:/migrations'
-  #   networks:
-  #     booking-postgres-net:
-  #   env_file:
-  #     - ./.env
-
   booking-backend:
-    image: 'denhax/booking-api:v0.3'
+    image: 'denhax/booking-api:v1'
     container_name: 'booking-api'
     depends_on:
       postgres:
         condition: service_healthy
-      # migrate:
-      #   condition: service_completed_successfully
     ports:
       - '3000:3000'
     environment:
