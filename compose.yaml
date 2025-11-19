@@ -1,7 +1,7 @@
 services:
   postgres:
     image: postgres:17.7
-    container_name: 'booking-storage'
+    container_name: "booking-storage"
     restart: unless-stopped
     healthcheck:
       test: pg_isready -U $POSTGRES_USER -d $POSTGRES_DB
@@ -10,27 +10,27 @@ services:
       retries: 5
       start_period: 5s
     volumes:
-      - 'booking-storage:/var/lib/postgresql/data'
+      - "booking-storage:/var/lib/postgresql/data"
     environment:
       POSTGRES_DB: $POSTGRES_DB
       POSTGRES_USER: $POSTGRES_USER
       POSTGRES_PASSWORD: $POSTGRES_PASSWORD
     ports:
-      - '${POSTGRES_EXTERNAL_PORT}:5432'
+      - "${POSTGRES_EXTERNAL_PORT}:5432"
     networks:
       booking-postgres-net:
     env_file:
       - ./.env
   booking-backend:
-    image: 'denhax/booking-api:v1'
-    container_name: 'booking-api'
+    image: "denhax/booking-api:v1.1"
+    container_name: "booking-api"
     depends_on:
       postgres:
         condition: service_healthy
     ports:
-      - '3000:3000'
+      - "3000:3000"
     environment:
-      - 'DATABSE_URL=${POSTGRES_URL}'
+      - "DATABSE_URL=${POSTGRES_URL}"
     restart: on-failure:3
     networks:
       booking-postgres-net:

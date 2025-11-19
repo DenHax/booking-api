@@ -12,6 +12,42 @@
 
 Решение: Не реализовывать авторизацию в данный момент
 
+## API
+
+API разработанного приложения можно протестировать после запуска через Swagger. Он доступен по адресу [http://localhost:3000/api]
+
+Само API запущено по пути [http://localhost:3000/api], содержит эндпоинты:
+
+`api/bookings`
+
+`api/users`
+
+`api/events`
+
+### Пример работы
+
+Дано: тестовый вариант из задачи. ID пользователя генерируется автоматически, пользователь и событие были созданы через `POST api/users` и `POST api/events`
+
+`POST http://localhost:3000/api/bookings/reserve`
+
+```json
+{
+  "event_id": 1,
+  "user_id": "cmi6hesem0000k201auy1p6ol"
+}
+```
+
+Полученный ответ от API
+
+```json
+{
+  "id": 1,
+  "eventId": 1,
+  "userId": "cmi6hesem0000k201auy1p6ol",
+  "createdAt": "2025-11-19T20:56:25.756Z"
+}
+```
+
 ## Getting started
 
 Запуск происходит в Docker, оркестрация через Compose
