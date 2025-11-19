@@ -1,5 +1,9 @@
 FROM node:24-alpine AS development
 WORKDIR /usr/src/app
+RUN apk add --no-cache \
+  openssl \
+  openssl-dev \
+  libc6-compat
 ARG DATABASE_URL
 ENV DATABASE_URL=$DATABASE_URL
 COPY package*.json ./
@@ -12,6 +16,10 @@ USER node
 # Build stage
 FROM node:24-alpine AS build
 WORKDIR /usr/src/app
+RUN apk add --no-cache \
+  openssl \
+  openssl-dev \
+  libc6-compat
 COPY package*.json ./
 COPY --from=development /usr/src/app/node_modules ./node_modules
 COPY . .
@@ -29,8 +37,17 @@ USER node
 FROM node:24-alpine AS production
 WORKDIR /usr/src/app
 
-COPY --from=build /usr/src/app/package.json /usr/src/app/prisma ./
+RUN apk add --no-cache \
+  openssl \
+  openssl-dev \
+  libc6-compat
+
+COPY --from=build /usr/src/app/package.json ./
+COPY --from=build /usr/src/app/prisma ./prisma
+
 COPY --from=build /usr/src/app/node_modules ./node_modules
+
 COPY --from=build /usr/src/app/dist ./dist
-# CMD ["node", "dist/src/main.js"]
-CMD ["npm", "run", "migrate:start:prod"]
+COPY --from=build /usr/src/app/generated ./generated
+
+CMD ["sh", "-c", "npx prisma migrate deploy && node dist/src/main"]

@@ -43,7 +43,7 @@ services:
   #     - ./.env
 
   booking-backend:
-    image: 'denhax/booking-api:v0.2'
+    image: 'denhax/booking-api:v0.3'
     container_name: 'booking-api'
     depends_on:
       postgres:
