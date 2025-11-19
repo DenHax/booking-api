@@ -13,3 +13,33 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  id        String   @id @default(cuid()) 
+  username  String
+  bookings  Booking[]
+
+  @@map("users")
+}
+
+model Event {
+  id         Int       @id @default(autoincrement())
+  name       String
+  totalSeats Int
+  bookings   Booking[]
+
+  @@map("events")
+}
+
+model Booking {
+  id        Int      @id @default(autoincrement())
+  eventId   Int
+  userId    String
+  createdAt DateTime @default(now())
+
+  event Event @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("bookings")
+  @@unique([eventId, userId]) 
+}
